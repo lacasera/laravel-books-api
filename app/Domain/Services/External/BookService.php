@@ -10,10 +10,13 @@ class BookService
 
     protected $endponit = "https://www.anapioficeandfire.com/api/books";
 
+    protected $bookParser;
 
-    public function __construct(Client $guzzle)
+    public function __construct(Client $guzzle, BookParser $bookParser)
     {
         $this->guzzle = $guzzle;
+        $this->bookParser = $bookParser;
+
     }
 
     public function searchBooks($string = null) 
@@ -29,24 +32,11 @@ class BookService
             $externalBooks = json_decode($response->getBody()->getContents(), true);
 
             collect($externalBooks)->each(function($externalBook) use ($parsedBooks) {
-                $parsedBooks->push( $this->parseBook($externalBook));
+                $parsedBooks->push( $this->bookParser->parse($externalBook));
             });
         }
 
         return $parsedBooks->all();
 
-    }
-
-    private function parseBook($book)
-    {
-        return [
-            "name" => $book['name'],
-            "isbn" => $book['isbn'],
-            "authors" => $book['authors'],
-            "publisher" => $book['publisher'],
-            "country" => $book['country'],
-            "release_date" => date('y-m-d', strtotime($book['released'])) ,
-            "number_of_pages" => $book['numberOfPages']
-        ];
     }
 }
