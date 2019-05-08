@@ -6,7 +6,7 @@
 4. create database and update `.env` with database details
 5. run migrations `php artisan migrate`
 6. serve project on default port 8000 by running `php artisan serve`
-7. Run tests by runnning 'composer test
+7. Run tests by runnning `composer test`
 
 #### Endpoints
 ```
