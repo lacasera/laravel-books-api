@@ -6,14 +6,19 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateBookRequest;
+use App\Adeva\Repositories\Book\BookRepository;
 
 class BooksController extends Controller
 {
     protected $bookModel;
 
-    public function __construct(Book $bookModel)
+    protected $bookRepository;
+
+    public function __construct(Book $bookModel, BookRepository $bookRepository)
     {
         $this->bookModel = $bookModel;
+
+        $this->bookRepository = $bookRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +27,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = $this->bookModel->all();
+        $books = $this->bookRepository->findAll();
 
         return response()->json([
             'status_code' => 200,
@@ -40,7 +45,9 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        $book = $this->bookModel->create($request->all());
+        $book = $this->bookRepository->create(
+            $request->all()
+        );
 
         return response()->json([
             'status_code' => 201,
@@ -59,7 +66,7 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $book = $this->bookModel->findOrFail($id);
+        $book = $this->bookRepository->findById($id);
 
         return response()->json([
             'status_code' => 200,
@@ -77,8 +84,8 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->bookModel->where('id', $id)->update($request->all());
-        $book = $this->bookModel->find($id);
+        
+        $book = $this->bookRepository->update($request->all(), $id);
         return response()->json([
             'status_code' => 200,
             'status' => 'success',
@@ -95,9 +102,8 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = $this->bookModel->find($id);
-        $this->bookModel->where('id', $id)->delete();
-    
+        $book =  $this->bookRepository->delete($id);
+        
         return response()->json([
             'status_code' => 204,
             'status' => 'success',
