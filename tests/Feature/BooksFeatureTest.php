@@ -129,7 +129,7 @@ class BooksFeatureTest extends TestCase
         $response->assertStatus(200);
     }
 
-     /**
+    /**
      * @test
      */
     public function get_an_external_book()
@@ -138,4 +138,18 @@ class BooksFeatureTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+     /**
+     * @test
+     */
+     public function get_a_non_existing_book()
+     {
+        $response = $this->get('/api/v1/books/999');
+ 
+        $response->assertStatus(200);
+
+        $results = json_decode($response->getContent());
+
+        $this->assertEmpty($results->data);
+     }
 }
