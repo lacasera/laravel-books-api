@@ -1,16 +1,17 @@
 #### Setup
 
 1. Clone project
-2. install packages byn runnig `composer install`
+2. install packages by running `composer install`
 3. create a `.env` file by running `cp .env.example .env`
 4. create database and update `.env` with database details
 5. run migrations `php artisan migrate`
 6. serve project on default port 8000 by running `php artisan serve`
-7. Run tests by runnning 'composer test
+7. Run tests by runnning `composer test`
 
 #### Endpoints
-BASE URL = https://localhost:8000/api
-
+```
+BASE URL = http://localhost:8000/api (if running on default port)
+```
 1. query the Ice And Fire API for books
 
 ```
