@@ -12,6 +12,5 @@
 */
 
 Route::get('/', function () {
-    return factory(App\Models\Book::class, 40)->create();
-   // return view('welcome');
+    return view('welcome');
 });
