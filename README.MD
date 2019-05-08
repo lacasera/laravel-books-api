@@ -10,7 +10,7 @@
 
 #### Endpoints
 ```
-BASE URL = https://localhost:8000/api (if running on default port)
+BASE URL = http://localhost:8000/api (if running on default port)
 ```
 1. query the Ice And Fire API for books
 
