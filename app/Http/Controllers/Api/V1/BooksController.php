@@ -6,6 +6,7 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateBookRequest;
+use App\Adeva\Services\External\BookService;
 use App\Adeva\Repositories\Book\BookRepository;
 
 class BooksController extends Controller
@@ -43,7 +44,7 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookRequest $request)
     {
         $book = $this->bookRepository->create(
             $request->all()
@@ -103,12 +104,35 @@ class BooksController extends Controller
     public function destroy($id)
     {
         $book =  $this->bookRepository->delete($id);
-        
+
         return response()->json([
             'status_code' => 204,
             'status' => 'success',
             'message' => "The book {$book->name} has been deleted successfully",
             'data' => $book
         ], 200);
+    }
+
+    public function search(Request $request)
+    {
+        return response()->json([
+            'status_code' => 200,
+            'status' => 'success',
+            'data' =>  $this->bookRepository->search($request->get('query'))
+        ], 200);
+    }
+
+    public function externalSearch(Request $request,  BookService $bookService)
+    {
+        $externalBook = $bookService->searchBooks(
+            $request->get('name')
+        );
+
+        return response()->json([
+            'status_code' => 200,
+            'status' => 'success',
+            'data' =>  $externalBook
+        ], 200);
+         
     }
 }

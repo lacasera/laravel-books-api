@@ -18,7 +18,8 @@ abstract class JsonRequest extends FormRequest
 
         throw new HttpResponseException(response()->json([
             'status' => 'error',
-            'result' => $errors
+            'status_code' => 400,
+            'data' => $errors
         ], Response::HTTP_BAD_REQUEST));
     }
 }

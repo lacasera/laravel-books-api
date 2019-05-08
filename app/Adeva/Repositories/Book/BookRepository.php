@@ -42,4 +42,16 @@ class BookRepository
         $this->bookModel->where('id', $id)->delete();
         return $book;
     }
+
+    public function search($query)
+    {
+
+        $books = Book::where("name", "LIKE", "%$query%")
+                    ->orWhere("country", "LIKE", "%$query%")
+                    ->orWhere("publisher", "LIKE", "%$query%")
+                    ->orWhere("release_date", "LIKE", "%$query%")
+                    ->get();
+
+        return $books;
+    }
 }

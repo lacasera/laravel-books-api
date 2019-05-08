@@ -14,4 +14,8 @@ class Book extends Model
     {
         return explode(',', $this->attributes['authors']);
     }
+
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 }

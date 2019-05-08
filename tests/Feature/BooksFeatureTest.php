@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Book;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BooksFeatureTest extends TestCase
 {
@@ -102,6 +100,42 @@ class BooksFeatureTest extends TestCase
         $this->assertEquals($results->status_code, 204);
         $this->assertEquals($results->status, 'success');
         $this->assertEquals($results->message, "The book {$results->data->name} has been deleted successfully");
+    }
 
+    /**
+     * @test
+     */
+    public function search_for_books()
+    {
+        $book = factory(Book::class)->create()->first();
+
+        $response = $this->get("/api/v1/books/search?query={$book->name}");
+
+        $results = json_decode($response->getContent());
+
+        $response->assertStatus(200);
+        $this->assertEquals($results->status_code, 200);
+        $this->assertEquals($results->status, 'success');
+        $this->assertEquals($results->data[0]->name, $book->name);
+    }
+
+    /**
+     * @test
+     */
+    public function get_external_books()
+    {
+        $response = $this->get('/api/external-books');
+
+        $response->assertStatus(200);
+    }
+
+     /**
+     * @test
+     */
+    public function get_an_external_book()
+    {
+        $response = $this->get('/api/external-books?name=A Game of thrones');
+
+        $response->assertStatus(200);
     }
 }
