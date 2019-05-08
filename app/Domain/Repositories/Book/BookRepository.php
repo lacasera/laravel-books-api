@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Adeva\Repositories\Book;
+namespace App\Domain\Repositories\Book;
 
 use App\Models\Book;
 

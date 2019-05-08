@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Adeva\Services\External;
+namespace App\Domain\Services\External;
 
 use GuzzleHttp\Client;
 

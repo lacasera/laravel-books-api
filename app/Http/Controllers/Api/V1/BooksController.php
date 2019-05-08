@@ -6,8 +6,8 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateBookRequest;
-use App\Adeva\Services\External\BookService;
-use App\Adeva\Repositories\Book\BookRepository;
+use App\Domain\Services\External\BookService;
+use App\Domain\Repositories\Book\BookRepository;
 
 class BooksController extends Controller
 {
@@ -72,7 +72,7 @@ class BooksController extends Controller
         return response()->json([
             'status_code' => 200,
             'status' => 'success',
-            'data' =>  $book
+            'data' =>  $book ?? []
         ], 200);
     }
 
