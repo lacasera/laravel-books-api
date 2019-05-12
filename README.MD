@@ -3,7 +3,7 @@
 1. Clone project
 2. install packages by running `composer install`
 3. create a `.env` file by running `cp .env.example .env`
-4. create database and update `.env` with database details
+4. create a mysql database and update `.env` with database details
 5. run migrations `php artisan migrate`
 6. serve project on port 8080 by running `php artisan serve --port 8080`
 7. Run tests by runnning `composer test`
